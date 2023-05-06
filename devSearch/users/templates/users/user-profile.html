@@ -20,12 +20,12 @@
                 {% endif %}
                 {% if profile.social_twitter %}
                 <li>
-                  <a title="Twitter" href="#" target="_blank"><i class="im im-twitter"></i>T</a>
+                  <a title="Twitter" href="{{profile.social_twitter}}" target="_blank"><i class="im im-twitter"></i>T</a>
                 </li>
                 {% endif %}
                 {% if profile.social_linkedin %}
                 <li>
-                  <a title="LinkedIn" href="#" target="_blank"><i class="im im-linkedin"></i>L</a>
+                  <a title="LinkedIn" href="{{profile.social_linkedin}}" target="_blank"><i class="im im-linkedin"></i>L</a>
                 </li>
                 {% endif %}
                 {% if profile.youtube %}
@@ -35,7 +35,7 @@
                 {% endif %}
                 {% if profile.website %}
                 <li>
-                  <a title="Personal Website" href="#" target="_blank"><i class="im im-globe"></i>W</a>
+                  <a title="Personal Website" href="{{profile.social_youtube}}" target="_blank"><i class="im im-globe"></i>W</a>
                 </li>
                 {% endif %}
               </ul>
