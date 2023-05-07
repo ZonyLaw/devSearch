@@ -23,6 +23,9 @@ class Projects(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ['-created']  # dash makes is ascending order
+
 
 class Review(models.Model):
     VOTE_TYPE = (
