@@ -9,7 +9,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 def projects(request):
     projects, search_query = searchProjects(request)
-    custom_range, projects = paginationProjects(request, projects, 3)
+    custom_range, projects = paginationProjects(request, projects, 2)
 
     context = {'projects': projects,
                'search_query': search_query, 'custom_range': custom_range}
