@@ -18,12 +18,15 @@ def project(request, pk):
 
 @login_required(login_url="login")
 def createProject(request):
+    profile = request.user.profile
     form = ProjectForm()
 
     if request.method == "POST":
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            project = form.save(commit=False)
+            project.owner = profile
+            project.save()
             return redirect('projects')
     context = {'form': form}
     return render(request, "projects/project_form.html", context)
@@ -31,7 +34,10 @@ def createProject(request):
 
 @login_required(login_url="login")
 def updateProject(request, pk):
-    project = Projects.objects.get(id=pk)
+    profile = request.user.profile
+
+#    project = Projects.objects.get(id=pk) //this is replaced with line below to ensure only user owning the project can make update.
+    project = profile.project_set.get(id=pk)
     print(project)
     form = ProjectForm(instance=project)
 
@@ -46,7 +52,9 @@ def updateProject(request, pk):
 
 @login_required(login_url="login")
 def deleteProject(request, pk):
-    project = Projects.objects.get(id=pk)
+    profile = request.user.profile
+    # project = Projects.objects.get(id=pk)
+    project = profile.project_set.get(id=pk)
     if request.method == 'POST':
         project.delete()
         return redirect('projects')
