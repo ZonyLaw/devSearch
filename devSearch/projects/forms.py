@@ -30,7 +30,7 @@ class ProjectForm(ModelForm):
 class ReviewForm(ModelForm):
     class Meta:
         model = Review
-        field = ['value', 'body']
+        fields = ['value', 'body']
 
         labels = {
             'value': 'Place your vote',
