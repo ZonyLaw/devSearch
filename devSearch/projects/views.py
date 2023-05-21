@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Projects, Tag
-from .forms import ProjectForm
+from .forms import ProjectForm, ReviewForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .utils import searchProjects, paginationProjects
@@ -18,8 +18,9 @@ def projects(request):
 
 def project(request, pk):
     projectObj = Projects.objects.get(id=pk)
-    tags = projectObj.tags.all()
-    return render(request, 'projects/single-project.html', {'project': projectObj, 'tags': tags})
+    # tags = projectObj.tags.all()
+    form = ReviewForm()
+    return render(request, 'projects/single-project.html', {'project': projectObj, 'form': form})
 
 
 @login_required(login_url="login")

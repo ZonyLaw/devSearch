@@ -2,19 +2,6 @@
 
 {% block content %}
 
-<img style="max-width:500px; "src="{{ project.featured_image.url }}">
-
-<h1>{{project.title}}t</h1>
-
-<hr>
-{% for tag in project.tags.all %}
-    <span style="border:1px solid grey">{{tag}}</span>
-{% endfor %}
-
-<hr>
-<br>
-<p>{{project.description}}</p>
-
 <main class="singleProject my-md">
     <div class="container">
       <div class="layout">
@@ -52,28 +39,34 @@
                 {{project.vote_ratio}}% Postitive Feedback ({{project.vote_total}} Vote{{project.vote_total|pluralize:"s"}})
             </h5>
 
-            <form class="form" action="#" method="POST">
-              <!-- Textarea -->
+            <form class="form" action="{% url 'project' project.id %}" method="POST">
+              {% csrf_token %}
+              {% for field in form %}
               <div class="form__field">
-                <label for="formInput#textarea">Comments: </label>
-                <textarea class="input input--textarea" name="message" id="formInput#textarea"
-                  placeholder="Write your comments here..."></textarea>
+                <label for="formInput#textarea">{{field.label}} </label>
+                {{field}}
               </div>
-              <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
+              {% endfor %}
+              <input class="btn btn--sub btn--lg" type="submit" value="Add Review" />
             </form>
             <div class="commentList">
               {% for review in project.review_set.all %}
+              {% if review.body %}
               <div class="comment">
-                <a href="{% url 'user-profile' review.owner.id %}">
+                <a href="profile.html">
                   <img class="avatar avatar--md"
                     src="{{review.owner.profile_image.url}}" alt="user" />
                 </a>
                 <div class="comment__details">
                   <a href="{% url 'user-profile' review.owner.id %}" class="comment__author">{{review.owner.name}}</a>
-                  <p class="comment__info">{{review.body}}</p>
+                  <p class="comment__info">
+                   {{review.body|linebreaksbr}}
+                  </p>
                 </div>
               </div>
-             {% endfor %}
+              {% endif %}
+              {% endfor %}
+            
             </div>
           </div>
         </div>
