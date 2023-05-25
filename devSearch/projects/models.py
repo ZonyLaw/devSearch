@@ -6,7 +6,7 @@ from users.models import Profile
 
 class Projects(models.Model):
     owner = models.ForeignKey(
-        Profile, null=True, blank=True, on_delete=models.SET_NULL)
+        Profile, null=True, blank=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     featured_image = models.ImageField(
@@ -26,6 +26,14 @@ class Projects(models.Model):
     class Meta:
         # dash makes is ascending order
         ordering = ['-vote_ratio', '-vote_total', 'title']
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.feature_image.url
+        except:
+            url = ''
+        return url
 
     @property
     def reviewers(self):
